@@ -29,7 +29,6 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
         viewModelScope.launch(coroutineExceptionHandler) {
             eventRepository.getEvent()
                 .onSuccess {
-                    println(it)
                     _eventInfo.value= it
                 }
                 .onFailure {
