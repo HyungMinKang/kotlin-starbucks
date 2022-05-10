@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">StarBucks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_btn_event_doNotShowAgain">다시 보지 않기</string>
+    <string name="label_btn_event_close">닫기</string>
 </resources>
