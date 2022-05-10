@@ -1,98 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".eventFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="event"
+            type="com.codesquad.starbucks.domain.model.Event" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="120dp">
-
-        <ImageView
-            android:id="@+id/iv_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/event_bg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_event_title"
-            style="@style/TextMedium.Bold.White"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/label_dummy_event_title"
-            app:layout_constraintEnd_toEndOf="@id/iv_event"
-            app:layout_constraintStart_toStartOf="@id/iv_event"
-            app:layout_constraintTop_toTopOf="@id/iv_event" />
-
+        android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
-            android:layout_marginTop="200dp"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="120dp">
 
-            <TextView
-                android:id="@+id/tv_event_range"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/iv_event"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_dummy_event_range"
+                android:background="@drawable/event_bg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_event_target"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@string/label_dummy_event_target"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_event_range" />
-
-            <TextView
-                android:id="@+id/tv_event_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@string/label_dummy_event_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_event_target" />
-
-            <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_event_title"
+                style="@style/TextMedium.Bold.White"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/label_dummy_event_menu"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_event_description" />
+                android:text="@{event.title}"
+                app:layout_constraintEnd_toEndOf="@id/iv_event"
+                app:layout_constraintStart_toStartOf="@id/iv_event"
+                app:layout_constraintTop_toTopOf="@id/iv_event" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:layout_marginTop="200dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_event_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{event.range}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_event_target"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{event.target}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_event_range" />
+
+                <TextView
+                    android:id="@+id/tv_event_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    eventDescription="@{event.description}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_event_target" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@{event.eventProduct}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_event_description" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/btn_radius_white"
-        android:paddingHorizontal="30dp"
-        style="@style/TextSmall.Bold.Teal"
-        android:text="@string/label_btn_event_doNotShowAgain" />
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/TextSmall.Bold.Teal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/btn_radius_white"
+            android:paddingHorizontal="30dp"
+            android:text="@string/label_btn_event_doNotShowAgain" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/btn_radius_tilt"
-        android:paddingHorizontal="60dp"
-        android:text="@string/label_btn_event_close"
-        style="@style/TextSmall.Bold.White"/>
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/TextSmall.Bold.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/btn_radius_tilt"
+            android:paddingHorizontal="60dp"
+            android:text="@string/label_btn_event_close" />
+    </FrameLayout>
+</layout>
