@@ -75,4 +75,10 @@ dependencies {
 
     //Joda
     implementation 'joda-time:joda-time:2.10.10'
+
+    //ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    //Coil
+    implementation("io.coil-kt:coil:0.10.0")
 }

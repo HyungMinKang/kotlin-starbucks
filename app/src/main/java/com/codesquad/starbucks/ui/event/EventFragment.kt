@@ -26,7 +26,6 @@ class EventFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
-        println(System.currentTimeMillis())
         return binding.root
     }
 
@@ -52,13 +51,13 @@ class EventFragment : Fragment() {
                     putString("clickedTime", getNowDateTime())
                     apply()
                 }
-            navigator.navigate(R.id.action_eventFragment_to_homeFragment)
+            navigator.navigate(R.id.action_eventFragment_to_frameFragment)
         }
     }
 
     private fun setCloseClickEvent() {
         binding.btnEventClose.setOnClickListener {
-            navigator.navigate(R.id.action_eventFragment_to_homeFragment)
+            navigator.navigate(R.id.action_eventFragment_to_frameFragment)
         }
     }
 
@@ -69,7 +68,7 @@ class EventFragment : Fragment() {
         val clickedTime = sharedPreferences.getString("clickedTime", null)
         clickedTime?.let {
             if (flag && getTimeDiff(clickedTime)) {
-                navigator.navigate(R.id.action_eventFragment_to_homeFragment)
+                navigator.navigate(R.id.action_eventFragment_to_frameFragment)
             }
         }
     }

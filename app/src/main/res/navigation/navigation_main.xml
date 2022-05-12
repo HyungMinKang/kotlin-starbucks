@@ -11,12 +11,12 @@
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
-            android:id="@+id/action_eventFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_eventFragment_to_frameFragment"
+            app:destination="@id/frameFragment" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.codesquad.starbucks.ui.home.HomeFragment"
+        android:id="@+id/frameFragment"
+        android:name="com.codesquad.starbucks.ui.FrameFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_frame" />
 </navigation>
