@@ -27,7 +27,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val personalRecommendAdapter= PersonalRecommendAdapter()
         viewModel.eventInfo.observe(viewLifecycleOwner){
-            binding.tvHomePersonalRecommendTitle.text = it.displayName
+            binding.userName= it.displayName
+            binding.mainEventImageUri= "${it.mainEventPath}${it.mainEventImagePath}"
             viewModel.getProduct(it.personalRecommendProducts)
         }
 
