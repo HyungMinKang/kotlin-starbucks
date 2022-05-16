@@ -37,6 +37,21 @@ fun getNowDateTime() :String{
     return nowDateTime.toString()
 }
 
+fun getNowHour():String{
+    val nowDateTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        LocalDateTime.now(ZoneId.of("Asia/Seoul")).hour
+    } else {
+        org.joda.time.LocalDateTime.now(DateTimeZone.forID("Asia/Seoul")).hourOfDay
+    }
+    return if(nowDateTime>12){
+        "오후 ${nowDateTime-12}시 기준"
+    }
+    else{
+        "오전 ${nowDateTime}시 기준"
+    }
+
+}
+
 fun secondsInOneDayDuration(seconds: Int): Boolean {
     return when {
         seconds > SECONDS_OF_DAY -> false

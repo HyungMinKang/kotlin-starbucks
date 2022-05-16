@@ -10,6 +10,7 @@ import com.codesquad.starbucks.data.remote.event.EventApi
 import com.codesquad.starbucks.domain.HomeRepository
 import com.codesquad.starbucks.domain.model.HomeContent
 import com.codesquad.starbucks.domain.model.HomeEvent
+import com.codesquad.starbucks.domain.model.NowRecommendItem
 import com.codesquad.starbucks.domain.model.PersoanlRecommendItem
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
@@ -24,6 +25,9 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _events= MutableLiveData<List<HomeEvent>>()
     val events : LiveData<List<HomeEvent>> = _events
+
+    private val _nowProducts= MutableLiveData<MutableList<NowRecommendItem>>()
+    val nowProducts:LiveData<MutableList<NowRecommendItem>> = _nowProducts
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
@@ -77,6 +81,41 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                 }
 
                 _products.value = tempProducts.toMutableList()
+            }.join()
+        }
+    }
+
+    fun getNowRecommendProduct(product_list: List<String>){
+        viewModelScope.launch(coroutineExceptionHandler) {
+            val tempProducts = mutableSetOf<NowRecommendItem>()
+            var tempProductTitle = ""
+            var tempProductImage = ""
+            val loadProduct = launch {
+                for (product in product_list) {
+                    async {
+                        homeRepository.getProductTitle(product)
+                            .onSuccess {
+                                tempProductTitle = it
+                            }
+                            .onFailure {
+                                _errorMessage.value = EventApi.ERROR_MESSAGE
+                            }
+                    }.await()
+
+                    async {
+                        homeRepository.getProductFile(product)
+                            .onSuccess {
+                                tempProductImage = it
+                            }.onFailure {
+                                _errorMessage.value = EventApi.ERROR_MESSAGE
+                            }
+                    }.await()
+                    if (tempProductTitle.isNotEmpty() && tempProductImage.isNotEmpty()) {
+                        tempProducts.add(NowRecommendItem(tempProductTitle, tempProductImage))
+                    }
+                }
+
+                _nowProducts.value = tempProducts.toMutableList()
             }.join()
         }
     }

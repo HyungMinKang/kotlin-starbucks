@@ -1,15 +1,23 @@
 package com.codesquad.starbucks.ui.home
 
+import android.icu.util.LocaleData
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.codesquad.starbucks.R
 import com.codesquad.starbucks.databinding.FragmentHomefragmentBinding
-import com.codesquad.starbucks.ui.event.EventViewModel
+import com.codesquad.starbucks.ui.common.getNowDateTime
+import com.codesquad.starbucks.ui.common.getNowHour
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.concurrent.timer
 
 class HomeFragment : Fragment() {
 
@@ -26,11 +34,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val personalRecommendAdapter= PersonalRecommendAdapter()
+
+        val nowRecommendAdapter= NowRecommendAdapter()
         val homeEventAdapter= HomeEventAdapter()
         viewModel.eventInfo.observe(viewLifecycleOwner){
             binding.userName= it.displayName
             binding.mainEventImageUri= "${it.mainEventPath}${it.mainEventImagePath}"
             viewModel.getProduct(it.personalRecommendProducts)
+            timer(period = 3600000, initialDelay = 0 ){
+                CoroutineScope(Dispatchers.Main).launch{
+                    binding.tvHomeNowRecommandTime.text= getNowHour()
+                    viewModel.getNowRecommendProduct(it.nowRecommendProducts)
+                }
+            }
             viewModel.getHomeEvents()
         }
 
@@ -38,6 +54,10 @@ class HomeFragment : Fragment() {
             adapter= personalRecommendAdapter
         }
 
+
+        binding.rvHomeNowRecommendMenus.apply {
+            adapter= nowRecommendAdapter
+        }
         binding.rvHomeEvents.apply {
             adapter= homeEventAdapter
         }
@@ -47,6 +67,10 @@ class HomeFragment : Fragment() {
 
         viewModel.events.observe(viewLifecycleOwner){
             homeEventAdapter.submitProducts(it)
+        }
+
+        viewModel.nowProducts.observe(viewLifecycleOwner){
+            nowRecommendAdapter.submitProducts(it)
         }
     }
 
