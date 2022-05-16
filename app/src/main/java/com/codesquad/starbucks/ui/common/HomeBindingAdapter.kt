@@ -1,6 +1,7 @@
 package com.codesquad.starbucks.ui.common
 
 import android.text.Html
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -13,6 +14,11 @@ fun getMainEventImage(view: ImageView, imageUri: String?) {
     view.load(imageUri) {
         scale(Scale.FIT)
     }
+}
+
+@BindingAdapter("HomeEventImage")
+fun getHomeEventImage(view:ImageView, imageUri: String?){
+    view.load(imageUri)
 }
 
 @BindingAdapter("welcomeMessage")

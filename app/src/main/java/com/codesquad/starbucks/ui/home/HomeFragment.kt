@@ -26,19 +26,27 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val personalRecommendAdapter= PersonalRecommendAdapter()
+        val homeEventAdapter= HomeEventAdapter()
         viewModel.eventInfo.observe(viewLifecycleOwner){
             binding.userName= it.displayName
             binding.mainEventImageUri= "${it.mainEventPath}${it.mainEventImagePath}"
             viewModel.getProduct(it.personalRecommendProducts)
+            viewModel.getHomeEvents()
         }
 
         binding.rvHomePersonalRecommendMenus.apply {
             adapter= personalRecommendAdapter
         }
 
+        binding.rvHomeEvents.apply {
+            adapter= homeEventAdapter
+        }
         viewModel.products.observe(viewLifecycleOwner){
-            println(it)
             personalRecommendAdapter.submitProducts(it)
+        }
+
+        viewModel.events.observe(viewLifecycleOwner){
+            homeEventAdapter.submitProducts(it)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.codesquad.starbucks.data.remote.homeContent
 
+import com.codesquad.starbucks.data.dto.HomeEventsDto
 import com.codesquad.starbucks.data.dto.ProductFileDto
 import com.codesquad.starbucks.data.dto.ProductInfoDto
 import retrofit2.http.Field
@@ -14,4 +15,9 @@ interface ProductContentApi {
     @FormUrlEncoded
     @POST("menu/productFileAjax.do")
     suspend fun getProductImage(@Field("PRODUCT_CD") product_cd:String): ProductFileDto
+
+    @FormUrlEncoded
+    @POST("whats_new/getIngList.do")
+    suspend fun getAllEvents(@Field("MENU_CD") menu_cd:String):HomeEventsDto
+
 }

@@ -22,7 +22,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val NetWorkModule = module {
 
-    single{ OkHttpClient.Builder().addInterceptor(get<HttpLoggingInterceptor>()).build() }
+    single{ OkHttpClient.Builder().build() }
 
     single {
         HttpLoggingInterceptor().apply {

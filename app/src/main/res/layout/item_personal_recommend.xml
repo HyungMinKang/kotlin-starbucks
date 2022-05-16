@@ -29,6 +29,7 @@
             android:id="@+id/tv_personal_recommend_menu"
             android:layout_width="wrap_content"
             android:textSize="8dp"
+            style="@style/TextSmall.Bold"
             android:layout_marginTop="5dp"
             android:textAlignment="center"
             android:layout_height="wrap_content"
