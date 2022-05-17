@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_event" >
         <action
             android:id="@+id/action_eventFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/navigation_home"
         android:name="com.codesquad.starbucks.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_homefragment" >
@@ -30,6 +30,23 @@
         tools:layout="@layout/fragment_what_new" >
         <action
             android:id="@+id/action_whatNewFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/navigation_home" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_order"
+        android:name="com.codesquad.starbucks.ui.order.OrderFragment"
+        android:label="OrderFragment"
+        tools:layout="@layout/fragment_order"
+        >
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.codesquad.starbucks.ui.favorite.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/navigation_pay"
+        android:name="com.codesquad.starbucks.ui.pay.PayFragment"
+        android:label="fragment_pay"
+        tools:layout="@layout/fragment_pay" />
 </navigation>

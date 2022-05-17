@@ -9,4 +9,22 @@
     <string name="label_navigation_order">주문</string>
     <string name="label_navigation_favorite">선호상품</string>
     <string name="label_what_new_title">What\'s new</string>
+    <string name="label_cold_brew_korean">콜드 브루</string>
+    <string name="label_cold_brew_english">Cold Brew</string>
+    <string name="label_espresso_korean">에스프레소</string>
+    <string name="label_espresso_english">Espresso</string>
+    <string name="label_frappuccino_korean">프라푸치노</string>
+    <string name="label_frappuccino_english">Frappuccino</string>
+    <string name="label_bread_korean">빵</string>
+    <string name="label_bread_english">Bread</string>
+    <string name="label_cake_korean">케이크</string>
+    <string name="label_cake_english">Cake</string>
+    <string name="label_sandwich_korean">샌드위치,샐러드</string>
+    <string name="label_sandwich_english">Sandwich,Salad</string>
+    <string name="label_mug_korean">머그</string>
+    <string name="label_mug_english">Mug</string>
+    <string name="label_glass_korean">글라스</string>
+    <string name="label_glass_english">glass</string>
+    <string name="label_thubmler_korean">플라스틱 텀블러</string>
+    <string name="label_thumbler_english">plastic thumbler</string>
 </resources>

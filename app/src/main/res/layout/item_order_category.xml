@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.codesquad.starbucks.domain.model.Category" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_drink_cold_brew"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            getImage="@{item.imageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_drink_cold_brew"
+            style="@style/TextSmall.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@{item.koTitle}"
+            app:layout_constraintStart_toEndOf="@id/iv_drink_cold_brew"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.enTitle}"
+            app:layout_constraintStart_toEndOf="@id/iv_drink_cold_brew"
+            app:layout_constraintTop_toBottomOf="@id/tv_drink_cold_brew" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

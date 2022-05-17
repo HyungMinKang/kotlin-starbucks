@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.codesquad.starbucks.databinding.ActivityMainBinding
@@ -22,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setupNav() {
-        val navController = supportFragmentManager.findFragmentById(R.id.eventFragment)?.findNavController()
+        val navController = supportFragmentManager.findFragmentById(R.id.fragment_container)?.findNavController()
+
         navController?.let {
             binding.bottomNavigationView.setupWithNavController(it)
         }
@@ -30,9 +32,11 @@ class MainActivity : AppCompatActivity() {
         navController?.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.eventFragment -> hideBottomNav()
+                R.id.whatNewFragment->hideBottomNav()
                 else -> showBottomNav()
             }
         }
+
     }
 
     private fun showBottomNav() {
