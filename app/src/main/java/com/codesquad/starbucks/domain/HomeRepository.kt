@@ -2,6 +2,7 @@ package com.codesquad.starbucks.domain
 
 import com.codesquad.starbucks.domain.model.HomeContent
 import com.codesquad.starbucks.domain.model.HomeEvent
+import com.codesquad.starbucks.domain.model.WhatNewEvent
 
 interface HomeRepository {
 
@@ -12,4 +13,6 @@ interface HomeRepository {
     suspend fun getProductFile(product_cd: String):Result<String>
 
     suspend fun getHomeEvents(menu_cd:String):Result<List<HomeEvent>>
+
+    suspend fun getWhatNewEvents():Result<List<WhatNewEvent>>
 }

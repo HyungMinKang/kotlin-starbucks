@@ -3,6 +3,7 @@ package com.codesquad.starbucks.data.remote.homeContent
 import com.codesquad.starbucks.data.dto.HomeEventsDto
 import com.codesquad.starbucks.data.dto.ProductFileDto
 import com.codesquad.starbucks.data.dto.ProductInfoDto
+import com.codesquad.starbucks.data.dto.WhatNewEventDto
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -19,5 +20,8 @@ interface ProductContentApi {
     @FormUrlEncoded
     @POST("whats_new/getIngList.do")
     suspend fun getAllEvents(@Field("MENU_CD") menu_cd:String):HomeEventsDto
+
+    @POST("whats_new/newsListAjax.do")
+    suspend fun getWhatNewEvents():WhatNewEventDto
 
 }

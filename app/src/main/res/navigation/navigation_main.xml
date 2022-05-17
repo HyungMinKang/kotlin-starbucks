@@ -18,5 +18,18 @@
         android:id="@+id/homeFragment"
         android:name="com.codesquad.starbucks.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_homefragment" />
+        tools:layout="@layout/fragment_homefragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_whatNewFragment"
+            app:destination="@id/whatNewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/whatNewFragment"
+        android:name="com.codesquad.starbucks.ui.whatNew.WhatNewFragment"
+        android:label="fragment_what_new"
+        tools:layout="@layout/fragment_what_new" >
+        <action
+            android:id="@+id/action_whatNewFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

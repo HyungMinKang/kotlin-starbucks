@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="event"
+            type="com.codesquad.starbucks.domain.model.WhatNewEvent" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_what_new_event_image"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            HomeEventImage="@{event.imageUri}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_what_new_event_title"
+            style="@style/TextSmall.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@{event.title}"
+            app:layout_constraintStart_toEndOf="@id/iv_what_new_event_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{event.news_dt}"
+            app:layout_constraintStart_toEndOf="@id/iv_what_new_event_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_what_new_event_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_what_new_event_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

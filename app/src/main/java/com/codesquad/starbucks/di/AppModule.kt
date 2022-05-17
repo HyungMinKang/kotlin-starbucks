@@ -2,6 +2,7 @@ package com.codesquad.starbucks.di
 
 import com.codesquad.starbucks.ui.event.EventViewModel
 import com.codesquad.starbucks.ui.home.HomeViewModel
+import com.codesquad.starbucks.ui.whatNew.WhatNewViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,4 +19,6 @@ val appModule = module {
     viewModel { EventViewModel(get()) }
 
     viewModel { HomeViewModel(get())}
+
+    viewModel { WhatNewViewModel(get())}
 }

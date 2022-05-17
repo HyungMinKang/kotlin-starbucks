@@ -6,6 +6,7 @@ import com.codesquad.starbucks.data.remote.homeContent.HomeContentDataSource
 import com.codesquad.starbucks.domain.HomeRepository
 import com.codesquad.starbucks.domain.model.HomeContent
 import com.codesquad.starbucks.domain.model.HomeEvent
+import com.codesquad.starbucks.domain.model.WhatNewEvent
 
 class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSource):HomeRepository {
     override suspend fun getTotalInfo(): Result<HomeContent>{
@@ -34,10 +35,20 @@ class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSourc
             val response = homeContentDataSource.getHomeEvents(menu_cd)
             val homeEvents= response.list.map {
                 val url= "${Constants.IMAGE_UPLOAD_PATH}${Constants.IMAGE_PROMOTION_PATH}${it.mobTHUM}"
-                println(url)
                 HomeEvent(it.title, url)
             }
             homeEvents
+        }
+    }
+
+    override suspend fun getWhatNewEvents(): Result<List<WhatNewEvent>> {
+        return runCatching {
+            val response= homeContentDataSource.getWhatNewEvents()
+            val whatNewEvent= response.list.map {
+                val url= "${Constants.IMAGE_UPLOAD_PATH}${Constants.IMAGE_NEWS_PATH}${it.appThnlImgName}"
+                WhatNewEvent(it.title, it.newsDt, url)
+            }
+            whatNewEvent
         }
     }
 }

@@ -31,6 +31,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
+                android:id="@+id/btn_home_what_new"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:drawableStart="@drawable/ic_baseline_mail_outline_24"

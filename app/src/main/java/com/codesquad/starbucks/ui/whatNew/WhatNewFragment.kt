@@ -5,16 +5,42 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.codesquad.starbucks.R
+import com.codesquad.starbucks.databinding.FragmentWhatNewBinding
+import com.codesquad.starbucks.ui.home.HomeViewModel
+import org.koin.android.ext.android.inject
 
 
 class WhatNewFragment : Fragment() {
+
+    private lateinit var binding:FragmentWhatNewBinding
+    private lateinit var navigator:NavController
+    private val viewModel:  WhatNewViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding= DataBindingUtil.inflate(inflater, R.layout.fragment_what_new, container, false)
+        return binding.root
+    }
 
-        return inflater.inflate(R.layout.fragment_what_new, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val whatNewAdapter= WhatNewAdapter()
+        navigator= Navigation.findNavController(view)
+        binding.rvWhatNewEvent.apply {
+            adapter= whatNewAdapter
+        }
+
+        viewModel.events.observe(viewLifecycleOwner){
+            whatNewAdapter.submitEvents(it)
+        }
+        binding.btnWhatNewBack.setOnClickListener {
+            navigator.navigate(R.id.action_whatNewFragment_to_homeFragment)
+        }
     }
 
 }

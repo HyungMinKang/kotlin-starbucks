@@ -1,27 +1,27 @@
 package com.codesquad.starbucks.ui.home
 
-import android.icu.util.LocaleData
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.codesquad.starbucks.R
 import com.codesquad.starbucks.databinding.FragmentHomefragmentBinding
-import com.codesquad.starbucks.ui.common.getNowDateTime
 import com.codesquad.starbucks.ui.common.getNowHour
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import java.time.LocalDateTime
-import java.util.*
 import kotlin.concurrent.timer
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding:FragmentHomefragmentBinding
+    private lateinit var binding: FragmentHomefragmentBinding
+    private lateinit var navigator: NavController
     private val viewModel: HomeViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,17 +33,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val personalRecommendAdapter= PersonalRecommendAdapter()
-
-        val nowRecommendAdapter= NowRecommendAdapter()
-        val homeEventAdapter= HomeEventAdapter()
-        viewModel.eventInfo.observe(viewLifecycleOwner){
-            binding.userName= it.displayName
-            binding.mainEventImageUri= "${it.mainEventPath}${it.mainEventImagePath}"
+        val personalRecommendAdapter = PersonalRecommendAdapter()
+        navigator= Navigation.findNavController(view)
+        val nowRecommendAdapter = NowRecommendAdapter()
+        val homeEventAdapter = HomeEventAdapter()
+        viewModel.eventInfo.observe(viewLifecycleOwner) {
+            binding.userName = it.displayName
+            binding.mainEventImageUri = "${it.mainEventPath}${it.mainEventImagePath}"
             viewModel.getProduct(it.personalRecommendProducts)
-            timer(period = 3600000, initialDelay = 0 ){
-                CoroutineScope(Dispatchers.Main).launch{
-                    binding.tvHomeNowRecommandTime.text= getNowHour()
+            timer(period = 3600000, initialDelay = 0) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    binding.tvHomeNowRecommandTime.text = getNowHour()
                     viewModel.getNowRecommendProduct(it.nowRecommendProducts)
                 }
             }
@@ -51,29 +51,32 @@ class HomeFragment : Fragment() {
         }
 
         binding.rvHomePersonalRecommendMenus.apply {
-            adapter= personalRecommendAdapter
+            adapter = personalRecommendAdapter
         }
-
 
         binding.rvHomeNowRecommendMenus.apply {
-            adapter= nowRecommendAdapter
+            adapter = nowRecommendAdapter
         }
         binding.rvHomeEvents.apply {
-            adapter= homeEventAdapter
+            adapter = homeEventAdapter
         }
-        viewModel.products.observe(viewLifecycleOwner){
+
+        binding.btnHomeWhatNew.setOnClickListener {
+            navigator.navigate(R.id.action_homeFragment_to_whatNewFragment)
+        }
+
+        viewModel.products.observe(viewLifecycleOwner) {
             personalRecommendAdapter.submitProducts(it)
         }
 
-        viewModel.events.observe(viewLifecycleOwner){
+        viewModel.events.observe(viewLifecycleOwner) {
             homeEventAdapter.submitProducts(it)
         }
 
-        viewModel.nowProducts.observe(viewLifecycleOwner){
+        viewModel.nowProducts.observe(viewLifecycleOwner) {
             nowRecommendAdapter.submitProducts(it)
         }
     }
-
 
 
 }
