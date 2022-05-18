@@ -12,4 +12,6 @@ interface HomeContentDataSource {
     suspend fun getHomeEvents(menu_cd:String):HomeEventsDto
 
     suspend fun getWhatNewEvents():WhatNewEventDto
+
+    suspend fun getCategoryItems(jsFileName:String):CategoryItemDto
 }

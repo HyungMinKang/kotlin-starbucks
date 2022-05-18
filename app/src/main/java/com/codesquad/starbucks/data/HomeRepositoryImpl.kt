@@ -4,9 +4,11 @@ import com.codesquad.starbucks.common.Constants
 import com.codesquad.starbucks.data.dto.toHomeContent
 import com.codesquad.starbucks.data.remote.homeContent.HomeContentDataSource
 import com.codesquad.starbucks.domain.HomeRepository
+import com.codesquad.starbucks.domain.model.CategoryItem
 import com.codesquad.starbucks.domain.model.HomeContent
 import com.codesquad.starbucks.domain.model.HomeEvent
 import com.codesquad.starbucks.domain.model.WhatNewEvent
+import kotlin.random.Random
 
 class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSource):HomeRepository {
     override suspend fun getTotalInfo(): Result<HomeContent>{
@@ -49,6 +51,18 @@ class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSourc
                 WhatNewEvent(it.title, it.newsDt, url)
             }
             whatNewEvent
+        }
+    }
+
+    override suspend fun getCategoryItems(jsFileName:String): Result<List<CategoryItem>> {
+        return runCatching {
+            val response= homeContentDataSource.getCategoryItems(jsFileName)
+            val categoryItems= response.list.map {
+                val url= "${Constants.IMAGE_UPLOAD_PATH}${it.filePATH}"
+                val randomPrice= (3500..6000).random()
+                CategoryItem(url, it.productNM, it.productNM, randomPrice)
+            }
+            categoryItems
         }
     }
 }

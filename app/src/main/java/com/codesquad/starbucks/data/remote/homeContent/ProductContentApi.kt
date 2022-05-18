@@ -1,12 +1,10 @@
 package com.codesquad.starbucks.data.remote.homeContent
 
-import com.codesquad.starbucks.data.dto.HomeEventsDto
-import com.codesquad.starbucks.data.dto.ProductFileDto
-import com.codesquad.starbucks.data.dto.ProductInfoDto
-import com.codesquad.starbucks.data.dto.WhatNewEventDto
+import com.codesquad.starbucks.data.dto.*
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ProductContentApi {
     @FormUrlEncoded
@@ -24,4 +22,6 @@ interface ProductContentApi {
     @POST("whats_new/newsListAjax.do")
     suspend fun getWhatNewEvents():WhatNewEventDto
 
+    @POST("upload/json/menu/{jsFileName}")
+    suspend fun getCategoryItem(@Path("jsFileName") jsFileName:String ): CategoryItemDto
 }

@@ -8,5 +8,6 @@ class HomeContentRemoteDataSource(private val api: HomeContentApi, private val p
     override suspend fun getProductImage(product_cd: String): ProductFileDto = productApi.getProductImage(product_cd)
     override suspend fun getHomeEvents(menu_cd: String): HomeEventsDto= productApi.getAllEvents(menu_cd)
     override suspend fun getWhatNewEvents(): WhatNewEventDto =productApi.getWhatNewEvents()
+    override suspend fun getCategoryItems(jsFileName: String): CategoryItemDto = productApi.getCategoryItem(jsFileName)
 
 }

@@ -38,6 +38,9 @@
         android:label="OrderFragment"
         tools:layout="@layout/fragment_order"
         >
+        <action
+            android:id="@+id/action_navigation_order_to_categoryDetailFragment"
+            app:destination="@id/categoryDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_favorite"
@@ -49,4 +52,8 @@
         android:name="com.codesquad.starbucks.ui.pay.PayFragment"
         android:label="fragment_pay"
         tools:layout="@layout/fragment_pay" />
+    <fragment
+        android:id="@+id/categoryDetailFragment"
+        android:name="com.codesquad.starbucks.ui.order.CategoryDetailFragment"
+        android:label="CategoryDetailFragment" />
 </navigation>

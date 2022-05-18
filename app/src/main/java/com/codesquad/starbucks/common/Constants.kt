@@ -16,6 +16,9 @@ object Constants {
     const val MUG="https://image.istarbucks.co.kr/upload/store/skuimg/2020/09/[9300000002611]_20200918110429000.jpg"
     const val GLASS="https://image.istarbucks.co.kr/upload/store/skuimg/2020/02/[11108665]_20200225094939202.jpg"
     const val THUBMLER="https://image.istarbucks.co.kr/upload/store/skuimg/2021/08/[11123353]_20210803101923353.jpg"
+    const val CATEGORY_KEY="KEY_CATEGORY"
+    const val CATEGORY_CD_KEY="KEY_CATEGORY_CD"
     const val COROUTINE_ERROR = "잘못된 접근입니다."
+    const val EMPTY_DEFAULT=""
     const val COROUTINE_EXCEPTION_TAG = "CoroutineException"
 }

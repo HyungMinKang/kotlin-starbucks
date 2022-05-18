@@ -4,17 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.codesquad.starbucks.databinding.ItemOrderCategoryBinding
-import com.codesquad.starbucks.databinding.ItemWhatNewEventBinding
 import com.codesquad.starbucks.domain.model.Category
-import com.codesquad.starbucks.domain.model.WhatNewEvent
 
-class CategoryAdapter:  RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val itemClick: (categoryName: String) -> Unit) :  RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     private var events= mutableListOf<Category>()
 
     class ViewHolder(private val binding: ItemOrderCategoryBinding ): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Category){
+        fun bind(item: Category, itemClick: (categoryName: String) -> Unit){
             binding.item= item
+            binding.root.setOnClickListener {
+                itemClick.invoke(item.koTitle)
+            }
             binding.executePendingBindings()
         }
     }
@@ -25,7 +26,7 @@ class CategoryAdapter:  RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(events[position])
+        holder.bind(events[position], itemClick)
     }
 
     override fun getItemCount(): Int {
