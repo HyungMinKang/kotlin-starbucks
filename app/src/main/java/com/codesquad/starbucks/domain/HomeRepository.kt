@@ -1,9 +1,6 @@
 package com.codesquad.starbucks.domain
 
-import com.codesquad.starbucks.domain.model.CategoryItem
-import com.codesquad.starbucks.domain.model.HomeContent
-import com.codesquad.starbucks.domain.model.HomeEvent
-import com.codesquad.starbucks.domain.model.WhatNewEvent
+import com.codesquad.starbucks.domain.model.*
 
 interface HomeRepository {
 
@@ -18,4 +15,6 @@ interface HomeRepository {
     suspend fun getWhatNewEvents():Result<List<WhatNewEvent>>
 
     suspend fun getCategoryItems(jsFileName:String):Result<List<CategoryItem>>
+
+    suspend fun getProductDetail(product_cd: String):Result<ProductDetail>
 }

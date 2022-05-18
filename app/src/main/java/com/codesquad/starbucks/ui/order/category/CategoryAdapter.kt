@@ -1,4 +1,4 @@
-package com.codesquad.starbucks.ui.order
+package com.codesquad.starbucks.ui.order.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

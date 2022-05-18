@@ -1,4 +1,4 @@
-package com.codesquad.starbucks.ui.order
+package com.codesquad.starbucks.ui.order.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codesquad.starbucks.databinding.ItemOrderCategoryDetailBinding
 import com.codesquad.starbucks.domain.model.CategoryItem
 
-class CategoryItemAdapter() :  RecyclerView.Adapter<CategoryItemAdapter.ViewHolder>() {
+class CategoryItemAdapter(private val itemClick: ( productCD:String,productPrice:String,) -> Unit) :  RecyclerView.Adapter<CategoryItemAdapter.ViewHolder>() {
 
     private var events= mutableListOf<CategoryItem>()
 
     class ViewHolder(private val binding: ItemOrderCategoryDetailBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: CategoryItem){
+        fun bind(item: CategoryItem, itemClick: (productPrice:String, productCD:String) -> Unit){
             binding.item= item
             binding.price= "${item.price}원"
+            binding.root.setOnClickListener {
+                itemClick.invoke( item.productCD,item.price.toString(),)
+            }
             binding.executePendingBindings()
         }
     }
@@ -24,7 +27,7 @@ class CategoryItemAdapter() :  RecyclerView.Adapter<CategoryItemAdapter.ViewHold
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(events[position])
+        holder.bind(events[position], itemClick)
     }
 
     override fun getItemCount(): Int {

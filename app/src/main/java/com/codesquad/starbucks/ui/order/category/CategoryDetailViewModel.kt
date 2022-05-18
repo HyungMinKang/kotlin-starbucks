@@ -1,4 +1,4 @@
-package com.codesquad.starbucks.ui.order
+package com.codesquad.starbucks.ui.order.category
 
 import android.util.Log
 import androidx.lifecycle.LiveData

@@ -117,7 +117,7 @@ data class ItemInfo (
     @Json(name = "pro_SEQ")
     val proSEQ: Int?,
     @Json(name = "product_CD")
-    val productCD: String?,
+    val productCD: String,
     @Json(name = "product_ENGNM")
     val productENGNM: String?,
     @Json(name = "product_NM")

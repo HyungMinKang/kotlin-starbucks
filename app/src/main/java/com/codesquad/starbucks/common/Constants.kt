@@ -20,5 +20,7 @@ object Constants {
     const val CATEGORY_CD_KEY="KEY_CATEGORY_CD"
     const val COROUTINE_ERROR = "잘못된 접근입니다."
     const val EMPTY_DEFAULT=""
+    const val PRODUCT_CD_KEY="KEY_PRODUCT_CD"
+    const val PRODUCT_PRICE_KEY="KEY_PRODUCT_PRICE"
     const val COROUTINE_EXCEPTION_TAG = "CoroutineException"
 }

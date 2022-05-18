@@ -27,4 +27,11 @@
     <string name="label_glass_english">glass</string>
     <string name="label_thubmler_korean">플라스틱 텀블러</string>
     <string name="label_thumbler_english">plastic thumbler</string>
+    <string name="label_product_detail_kcal_title">칼로리</string>
+    <string name="label_product_detail_sugar_title">당류</string>
+    <string name="label_product_detail_sodium_title">나트륨</string>
+    <string name="label_product_detail_protein_title">단백질</string>
+    <string name="label_product_detail_caffein_title">카페인</string>
+    <string name="label_product_detail_sat_fat_title">포화지방</string>
+    <string name="label_product_detail_allergy_title">알레르기 유발 요인</string>
 </resources>

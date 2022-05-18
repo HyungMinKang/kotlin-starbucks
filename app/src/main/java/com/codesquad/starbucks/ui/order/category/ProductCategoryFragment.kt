@@ -1,3 +1,5 @@
+package com.codesquad.starbucks.ui.order.category
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +13,6 @@ import com.codesquad.starbucks.R
 import com.codesquad.starbucks.common.Constants
 import com.codesquad.starbucks.databinding.FragmentProductCategoryBinding
 import com.codesquad.starbucks.domain.model.Category
-import com.codesquad.starbucks.ui.order.CategoryAdapter
 
 class ProductCategoryFragment : Fragment() {
 

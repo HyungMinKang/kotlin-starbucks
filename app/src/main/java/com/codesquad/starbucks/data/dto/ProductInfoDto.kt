@@ -1,6 +1,7 @@
 package com.codesquad.starbucks.data.dto
 
 
+import com.codesquad.starbucks.domain.model.ProductDetail
 import com.squareup.moshi.Json
 
 data class ProductInfoDto(
@@ -209,3 +210,5 @@ data class View(
     @Json(name = "youtube_CODE")
     val youtubeCODE: String
 )
+
+fun View.toProductDetail():ProductDetail = ProductDetail(productNM, productENGNM, recommend, "${kcal}kcal", "${sugars}g", "${protein}mg", "${sodium}g", "${caffeine}mg","${satFAT}g", allergy.replace("@",","))

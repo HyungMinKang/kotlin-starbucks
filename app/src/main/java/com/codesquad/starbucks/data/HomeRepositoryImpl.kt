@@ -2,12 +2,10 @@ package com.codesquad.starbucks.data
 
 import com.codesquad.starbucks.common.Constants
 import com.codesquad.starbucks.data.dto.toHomeContent
+import com.codesquad.starbucks.data.dto.toProductDetail
 import com.codesquad.starbucks.data.remote.homeContent.HomeContentDataSource
 import com.codesquad.starbucks.domain.HomeRepository
-import com.codesquad.starbucks.domain.model.CategoryItem
-import com.codesquad.starbucks.domain.model.HomeContent
-import com.codesquad.starbucks.domain.model.HomeEvent
-import com.codesquad.starbucks.domain.model.WhatNewEvent
+import com.codesquad.starbucks.domain.model.*
 import kotlin.random.Random
 
 class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSource):HomeRepository {
@@ -60,9 +58,16 @@ class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSourc
             val categoryItems= response.list.map {
                 val url= "${Constants.IMAGE_UPLOAD_PATH}${it.filePATH}"
                 val randomPrice= (3500..6000).random()
-                CategoryItem(url, it.productNM, it.productNM, randomPrice)
+                CategoryItem(url, it.productNM, it.productNM, it.productCD, randomPrice)
             }
             categoryItems
+        }
+    }
+
+    override suspend fun getProductDetail(product_cd: String): Result<ProductDetail> {
+        return runCatching {
+            val response= homeContentDataSource.getProductInfo(product_cd)
+            response.view.toProductDetail()
         }
     }
 }

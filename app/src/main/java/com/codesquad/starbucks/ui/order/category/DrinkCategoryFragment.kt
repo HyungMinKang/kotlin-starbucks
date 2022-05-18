@@ -1,4 +1,4 @@
-package com.codesquad.starbucks.ui.order
+package com.codesquad.starbucks.ui.order.category
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.codesquad.starbucks.R
 import com.codesquad.starbucks.common.Constants
