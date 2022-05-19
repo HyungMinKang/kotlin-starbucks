@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 
 data class ProductInfoDto(
     @Json(name = "view")
-    val view: View
+    val view: View?
 )
 
 

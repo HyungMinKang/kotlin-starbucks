@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [FavoriteEntity::class], version = 1)
 abstract class FavoriteDataBase: RoomDatabase() {
@@ -13,7 +14,7 @@ abstract class FavoriteDataBase: RoomDatabase() {
         private var instance:FavoriteDataBase?=null
 
         @Synchronized
-        fun getInstance(context: Context):FavoriteDataBase?{
+        fun getInstance(context: Context, coroutineScope: CoroutineScope):FavoriteDataBase?{
             if(instance==null){
                 synchronized(FavoriteDataBase::class){
                     instance= Room.databaseBuilder(
@@ -26,5 +27,6 @@ abstract class FavoriteDataBase: RoomDatabase() {
             return instance
 
         }
+
     }
 }

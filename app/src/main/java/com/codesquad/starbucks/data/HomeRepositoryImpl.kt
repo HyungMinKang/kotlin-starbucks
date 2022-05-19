@@ -6,10 +6,13 @@ import com.codesquad.starbucks.data.dto.toProductDetail
 import com.codesquad.starbucks.data.remote.homeContent.HomeContentDataSource
 import com.codesquad.starbucks.domain.HomeRepository
 import com.codesquad.starbucks.domain.model.*
+import com.codesquad.starbucks.room.FavoriteDao
+import com.codesquad.starbucks.room.FavoriteEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
-class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSource) :
+class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSource, private val favoriteDao: FavoriteDao) :
     HomeRepository {
 
     override suspend fun getTotalInfo(): Flow<HomeContent> {
@@ -17,9 +20,9 @@ class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSourc
         return flow { emit(response.toHomeContent()) }
     }
 
-    override suspend fun getProductTitle(product_cd: String): Flow<String> {
+    override suspend fun getProductTitle(product_cd: String): Flow<String?> {
         val response = homeContentDataSource.getProductInfo(product_cd)
-        return flow { emit(response.view.productNM) }
+        return flow { emit(response.view?.productNM) }
     }
 
     override suspend fun getProductFile(product_cd: String): Flow<String> {
@@ -27,9 +30,9 @@ class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSourc
         return flow { emit("${response.file[0].imgUPLOADPATH}${response.file[0].filePATH}") }
     }
 
-    override suspend fun getNowProductTitle(product_cd: String): Flow<String> {
+    override suspend fun getNowProductTitle(product_cd: String): Flow<String?> {
         val response = homeContentDataSource.getProductInfo(product_cd)
-        return flow { emit(response.view.productNM) }
+        return flow { emit(response.view?.productNM) }
     }
 
     override suspend fun getNowProductFile(product_cd: String): Flow<String> {
@@ -65,8 +68,24 @@ class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSourc
         return flow { emit(categoryItems) }
     }
 
-    override suspend fun getProductDetail(product_cd: String): Flow<ProductDetail> {
+    override suspend fun getProductDetail(product_cd: String): Flow<ProductDetail?> {
         val response = homeContentDataSource.getProductInfo(product_cd)
-        return flow { emit(response.view.toProductDetail()) }
+        return flow { emit(response.view?.toProductDetail()) }
+    }
+
+    override suspend fun getFavoriteItem(favoriteItemTitle: String): Flow<FavoriteEntity?> {
+        return favoriteDao.search(favoriteItemTitle)
+    }
+
+    override suspend fun addFavoriteItem(favoriteEntity: FavoriteEntity) {
+        favoriteDao.insert(favoriteEntity)
+    }
+
+    override suspend fun deleteFavoriteItem(favoriteEntity: FavoriteEntity) {
+        favoriteDao.delete(favoriteEntity)
+    }
+
+    override suspend fun getAllFavoriteItem(): Flow<List<FavoriteEntity>> {
+        return favoriteDao.getAll()
     }
 }

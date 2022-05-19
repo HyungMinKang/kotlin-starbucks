@@ -1,10 +1,10 @@
 package com.codesquad.starbucks.room
 
-import androidx.annotation.Nullable
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteDao {
@@ -16,8 +16,9 @@ interface FavoriteDao {
     fun delete(favoriteItem: FavoriteEntity)
 
     @Query("SELECT * FROM favorites")
-    fun getAll(): List<FavoriteEntity>
+    fun getAll(): Flow<List<FavoriteEntity>>
 
-    @Query("SELECT*FROM favorites WHERE koTitle= :itemKoTitle")
-    fun search(itemKoTitle: String): FavoriteEntity
+
+    @Query("SELECT*FROM favorites WHERE koTitle= :itemKoTitle ")
+    fun search(itemKoTitle: String): Flow<FavoriteEntity?>
 }

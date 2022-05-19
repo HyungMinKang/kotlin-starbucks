@@ -68,5 +68,5 @@ val NetWorkModule = module {
     }
 
     single<HomeContentDataSource>{ HomeContentRemoteDataSource(get(), get()) }
-    single<HomeRepository> { HomeRepositoryImpl(get()) }
+    single<HomeRepository> { HomeRepositoryImpl(get(), get()) }
 }

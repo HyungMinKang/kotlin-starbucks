@@ -59,7 +59,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     async {
                         homeRepository.getProductTitle(product)
                             .catch { error -> _errorMessage.value = error.message.toString() }
-                            .collect { tempProductTitle = it }
+                            .collect { tempProductTitle = it?:"" }
                     }.await()
 
                     async {
@@ -86,7 +86,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     async {
                         homeRepository.getNowProductTitle(product)
                             .catch { error -> _errorMessage.value = error.message.toString() }
-                            .collect { tempProductTitle = it }
+                            .collect { tempProductTitle = it?:""}
                     }.await()
 
                     async {

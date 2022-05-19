@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.codesquad.starbucks.R
@@ -18,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import org.koin.android.ext.android.inject
 import kotlin.concurrent.timer
 
@@ -42,30 +41,31 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navigator = Navigation.findNavController(view)
         setAdapters()
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.eventInfo.collect {
                 binding.userName = it.displayName
                 binding.mainEventImageUri = "${it.mainEventPath}${it.mainEventImagePath}"
                 viewModel.getProduct(it.personalRecommendProducts)
+
                 timer(period = 3600000, initialDelay = 0) {
                     CoroutineScope(Dispatchers.Main).launch {
                         binding.tvHomeNowRecommandTime.text = getNowHour()
                         viewModel.getNowRecommendProduct(it.nowRecommendProducts)
                     }
                 }
-                viewModel.getHomeEvents()
+
             }
         }
-
+        viewModel.getHomeEvents()
         binding.btnHomeWhatNew.setOnClickListener {
             navigator.navigate(R.id.action_homeFragment_to_whatNewFragment)
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.products.collect {
-                    personalRecommendAdapter.submitProducts(it)
-                }
+            viewModel.products.collect {
+                personalRecommendAdapter.submitProducts(it)
             }
+
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.events.collect {
@@ -74,12 +74,15 @@ class HomeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nowProducts.collect {
-                    nowRecommendAdapter.submitProducts(it)
-                }
+            viewModel.nowProducts.collect {
+                nowRecommendAdapter.submitProducts(it)
             }
+
         }
+    }
+
+    private fun getHomeContents() {
+
     }
 
     private fun setAdapters() {
