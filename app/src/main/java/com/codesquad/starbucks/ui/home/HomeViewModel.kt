@@ -1,8 +1,6 @@
 package com.codesquad.starbucks.ui.home
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codesquad.starbucks.common.Constants
@@ -14,23 +12,28 @@ import com.codesquad.starbucks.domain.model.NowRecommendItem
 import com.codesquad.starbucks.domain.model.PersoanlRecommendItem
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
-    private val _totalInfo = MutableLiveData<HomeContent>()
-    val eventInfo: LiveData<HomeContent> = _totalInfo
+    private val _totalInfo =
+        MutableStateFlow<HomeContent>(HomeContent("", emptyList(), "", "", emptyList()))
+    val eventInfo: StateFlow<HomeContent> = _totalInfo
 
-    private val _products = MutableLiveData<MutableList<PersoanlRecommendItem>>()
-    val products: LiveData<MutableList<PersoanlRecommendItem>> = _products
+    private val _products = MutableStateFlow<MutableList<PersoanlRecommendItem>>(mutableListOf())
+    val products: StateFlow<MutableList<PersoanlRecommendItem>> = _products
 
-    private val _events= MutableLiveData<List<HomeEvent>>()
-    val events : LiveData<List<HomeEvent>> = _events
+    private val _events = MutableStateFlow<List<HomeEvent>>(emptyList())
+    val events: StateFlow<List<HomeEvent>> = _events
 
-    private val _nowProducts= MutableLiveData<MutableList<NowRecommendItem>>()
-    val nowProducts:LiveData<MutableList<NowRecommendItem>> = _nowProducts
+    private val _nowProducts = MutableStateFlow<MutableList<NowRecommendItem>>(mutableListOf())
+    val nowProducts: StateFlow<MutableList<NowRecommendItem>> = _nowProducts
 
-    private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> = _errorMessage
+    private val _errorMessage = MutableStateFlow<String>("")
+    val errorMessage: StateFlow<String> = _errorMessage
 
     private val coroutineExceptionHandler: CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
@@ -41,12 +44,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private fun getHomeContent() {
         viewModelScope.launch(coroutineExceptionHandler) {
             homeRepository.getTotalInfo()
-                .onSuccess {
-                    _totalInfo.value = it
-                }
-                .onFailure {
-                    _errorMessage.value = EventApi.ERROR_MESSAGE
-                }
+                .catch { error -> _errorMessage.value = error.message.toString() }
+                .collect { _totalInfo.value = it }
         }
     }
 
@@ -59,33 +58,25 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                 for (product in product_list) {
                     async {
                         homeRepository.getProductTitle(product)
-                            .onSuccess {
-                                tempProductTitle = it
-                            }
-                            .onFailure {
-                                _errorMessage.value = EventApi.ERROR_MESSAGE
-                            }
+                            .catch { error -> _errorMessage.value = error.message.toString() }
+                            .collect { tempProductTitle = it }
                     }.await()
 
                     async {
                         homeRepository.getProductFile(product)
-                            .onSuccess {
-                                tempProductImage = it
-                            }.onFailure {
-                                _errorMessage.value = EventApi.ERROR_MESSAGE
-                            }
+                            .catch { error -> _errorMessage.value = error.message.toString() }
+                            .collect { tempProductImage = it }
                     }.await()
                     if (tempProductTitle.isNotEmpty() && tempProductImage.isNotEmpty()) {
                         tempProducts.add(PersoanlRecommendItem(tempProductTitle, tempProductImage))
                     }
                 }
-
                 _products.value = tempProducts.toMutableList()
             }.join()
         }
     }
 
-    fun getNowRecommendProduct(product_list: List<String>){
+    fun getNowRecommendProduct(product_list: List<String>) {
         viewModelScope.launch(coroutineExceptionHandler) {
             val tempProducts = mutableSetOf<NowRecommendItem>()
             var tempProductTitle = ""
@@ -93,28 +84,18 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
             val loadProduct = launch {
                 for (product in product_list) {
                     async {
-                        homeRepository.getProductTitle(product)
-                            .onSuccess {
-                                tempProductTitle = it
-                            }
-                            .onFailure {
-                                _errorMessage.value = EventApi.ERROR_MESSAGE
-                            }
+                        homeRepository.getNowProductTitle(product)
+                            .catch { error -> _errorMessage.value = error.message.toString() }
+                            .collect { tempProductTitle = it }
                     }.await()
 
                     async {
-                        homeRepository.getProductFile(product)
-                            .onSuccess {
-                                tempProductImage = it
-                            }.onFailure {
-                                _errorMessage.value = EventApi.ERROR_MESSAGE
-                            }
+                        homeRepository.getNowProductFile(product)
+                            .catch { error -> _errorMessage.value = error.message.toString() }
+                            .collect { tempProductImage = it }
                     }.await()
-                    if (tempProductTitle.isNotEmpty() && tempProductImage.isNotEmpty()) {
-                        tempProducts.add(NowRecommendItem(tempProductTitle, tempProductImage))
-                    }
+                    if (tempProductTitle.isNotEmpty() && tempProductImage.isNotEmpty()) { tempProducts.add(NowRecommendItem(tempProductTitle, tempProductImage)) }
                 }
-
                 _nowProducts.value = tempProducts.toMutableList()
             }.join()
         }
@@ -124,12 +105,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         viewModelScope.launch(coroutineExceptionHandler) {
             launch {
                 homeRepository.getHomeEvents("all")
-                    .onSuccess {
-                        _events.value = it
-                    }
-                    .onFailure {
-                        _errorMessage.value = EventApi.ERROR_MESSAGE
-                    }
+                    .catch { error -> _errorMessage.value = error.message.toString() }
+                    .collect { _events.value = it }
             }
         }
     }

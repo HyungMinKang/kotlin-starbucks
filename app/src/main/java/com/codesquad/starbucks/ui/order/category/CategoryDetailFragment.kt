@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.codesquad.starbucks.R
 import com.codesquad.starbucks.common.Constants
 import com.codesquad.starbucks.databinding.FragmentCategoryDetailBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
@@ -39,9 +42,12 @@ class CategoryDetailFragment : Fragment() {
         viewModel.getCategoryItems(categoryCD)
         binding.tvCategoryDetailTitle.text= categoryName
         binding.rvCategoryItem.adapter= categoryDetailAdapter
-        viewModel.items.observe(viewLifecycleOwner){
-            categoryDetailAdapter.submitEvents(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.items.collect{
+                categoryDetailAdapter.submitEvents(it)
+            }
         }
+
         binding.btnCategoryItemBack.setOnClickListener {
             NavHostFragment.findNavController(this).popBackStack()
         }

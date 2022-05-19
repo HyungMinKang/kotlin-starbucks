@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.codesquad.starbucks.R
 import com.codesquad.starbucks.databinding.FragmentWhatNewBinding
 import com.codesquad.starbucks.ui.home.HomeViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
@@ -35,9 +38,12 @@ class WhatNewFragment : Fragment() {
             adapter= whatNewAdapter
         }
 
-        viewModel.events.observe(viewLifecycleOwner){
-            whatNewAdapter.submitEvents(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.events.collect{
+                whatNewAdapter.submitEvents(it)
+            }
         }
+
         binding.btnWhatNewBack.setOnClickListener {
             navigator.navigate(R.id.action_whatNewFragment_to_homeFragment)
         }

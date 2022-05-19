@@ -1,20 +1,25 @@
 package com.codesquad.starbucks.domain
 
 import com.codesquad.starbucks.domain.model.*
+import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    suspend fun getTotalInfo():Result<HomeContent>
+    suspend fun getTotalInfo(): Flow<HomeContent>
 
-    suspend fun getProductTitle(product_cd:String):Result<String>
+    suspend fun getProductTitle(product_cd:String):Flow<String>
 
-    suspend fun getProductFile(product_cd: String):Result<String>
+    suspend fun getProductFile(product_cd: String):Flow<String>
 
-    suspend fun getHomeEvents(menu_cd:String):Result<List<HomeEvent>>
+    suspend fun getNowProductTitle(product_cd: String):Flow<String>
 
-    suspend fun getWhatNewEvents():Result<List<WhatNewEvent>>
+    suspend fun getNowProductFile(product_cd: String):Flow<String>
 
-    suspend fun getCategoryItems(jsFileName:String):Result<List<CategoryItem>>
+    suspend fun getHomeEvents(menu_cd:String):Flow<List<HomeEvent>>
 
-    suspend fun getProductDetail(product_cd: String):Result<ProductDetail>
+    suspend fun getWhatNewEvents():Flow<List<WhatNewEvent>>
+
+    suspend fun getCategoryItems(jsFileName:String):Flow<List<CategoryItem>>
+
+    suspend fun getProductDetail(product_cd: String):Flow<ProductDetail>
 }

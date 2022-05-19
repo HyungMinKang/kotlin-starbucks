@@ -9,18 +9,22 @@ import com.codesquad.starbucks.common.Constants
 import com.codesquad.starbucks.domain.HomeRepository
 import com.codesquad.starbucks.domain.model.ProductDetail
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ProductDetailViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
-    private val _productInfo = MutableLiveData<ProductDetail>()
-    val productInfo: LiveData<ProductDetail> = _productInfo
+    private val _productInfo = MutableStateFlow<ProductDetail>(ProductDetail())
+    val productInfo: StateFlow<ProductDetail> = _productInfo
 
-    private val _productImage= MutableLiveData<String>()
-    val productImage:LiveData<String> = _productImage
+    private val _productImage= MutableStateFlow<String>("")
+    val productImage:StateFlow<String> = _productImage
 
-    private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> = _errorMessage
+    private val _errorMessage = MutableStateFlow<String>("")
+    val errorMessage:  StateFlow<String> = _errorMessage
 
     private val coroutineExceptionHandler: CoroutineExceptionHandler =
         CoroutineExceptionHandler { _, throwable ->
@@ -28,17 +32,17 @@ class ProductDetailViewModel(private val homeRepository: HomeRepository) : ViewM
             _errorMessage.value = Constants.COROUTINE_ERROR
         }
 
-
     fun getProductInfo(productCD: String) {
         viewModelScope.launch(coroutineExceptionHandler) {
             homeRepository.getProductDetail(productCD)
-                .onSuccess {
-                    println(it)
+                .catch { error -> _errorMessage.value = error.message.toString() }
+                .collect {
                     _productInfo.value = it
                 }
+
             homeRepository.getProductFile(productCD)
-                .onSuccess {
-                    println(it)
+                .catch { error -> _errorMessage.value = error.message.toString() }
+                .collect {
                     _productImage.value = it
                 }
         }

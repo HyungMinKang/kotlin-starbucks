@@ -14,9 +14,7 @@ class CategoryItemAdapter(private val itemClick: ( productCD:String,productPrice
         fun bind(item: CategoryItem, itemClick: (productPrice:String, productCD:String) -> Unit){
             binding.item= item
             binding.price= "${item.price}원"
-            binding.root.setOnClickListener {
-                itemClick.invoke( item.productCD,item.price.toString(),)
-            }
+            binding.root.setOnClickListener { itemClick.invoke( item.productCD,item.price.toString(),) }
             binding.executePendingBindings()
         }
     }
