@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="event"
+            type="com.codesquad.starbucks.domain.model.HomeEvent"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_home_event_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            HomeEventImage="@{event.imageUri}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_home_event_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/iv_home_event_image"
+            android:text="@{event.title}"
+            style="@style/TextSmall.Bold"
+            app:layout_constraintEnd_toEndOf="@id/iv_home_event_image"
+            app:layout_constraintTop_toBottomOf="@id/iv_home_event_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

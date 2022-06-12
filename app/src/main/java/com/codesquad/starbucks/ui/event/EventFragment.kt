@@ -26,7 +26,6 @@ class EventFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
-        println(System.currentTimeMillis())
         return binding.root
     }
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.codesquad.starbucks.domain.model.CategoryItem" />
+
+        <variable
+            name="price"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_item_image"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            getImage="@{item.imageUrl}"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_item_title_korean"
+            style="@style/TextSmall.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@{item.koTitle}"
+            app:layout_constraintStart_toEndOf="@id/iv_item_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_item_title_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.enTitle}"
+            app:layout_constraintStart_toEndOf="@id/iv_item_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_title_korean" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{price}"
+            app:layout_constraintStart_toEndOf="@id/iv_item_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_title_english"
+            android:layout_marginTop="8dp"
+            style="@style/TextSmall.Bold"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

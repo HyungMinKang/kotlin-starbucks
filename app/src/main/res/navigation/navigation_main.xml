@@ -12,11 +12,56 @@
         tools:layout="@layout/fragment_event" >
         <action
             android:id="@+id/action_eventFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/navigation_home"
         android:name="com.codesquad.starbucks.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_homefragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_whatNewFragment"
+            app:destination="@id/whatNewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/whatNewFragment"
+        android:name="com.codesquad.starbucks.ui.whatNew.WhatNewFragment"
+        android:label="fragment_what_new"
+        tools:layout="@layout/fragment_what_new" >
+        <action
+            android:id="@+id/action_whatNewFragment_to_homeFragment"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_order"
+        android:name="com.codesquad.starbucks.ui.order.OrderFragment"
+        android:label="OrderFragment"
+        tools:layout="@layout/fragment_order"
+        >
+        <action
+            android:id="@+id/action_navigation_order_to_categoryDetailFragment"
+            app:destination="@id/categoryDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.codesquad.starbucks.ui.favorite.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/navigation_pay"
+        android:name="com.codesquad.starbucks.ui.pay.PayFragment"
+        android:label="fragment_pay"
+        tools:layout="@layout/fragment_pay" />
+    <fragment
+        android:id="@+id/categoryDetailFragment"
+        android:name="com.codesquad.starbucks.ui.order.category.CategoryDetailFragment"
+        android:label="CategoryDetailFragment" >
+        <action
+            android:id="@+id/action_categoryDetailFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.codesquad.starbucks.ui.product.ProductDetailFragment"
+        android:label="ProductDetailFragment" />
 </navigation>

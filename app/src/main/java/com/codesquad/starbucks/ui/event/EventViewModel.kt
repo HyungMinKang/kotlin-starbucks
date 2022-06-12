@@ -25,14 +25,14 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
             _errorMessage.value = Constants.COROUTINE_ERROR
         }
 
-    private fun getEvent(){
+    private fun getEvent() {
         viewModelScope.launch(coroutineExceptionHandler) {
             eventRepository.getEvent()
                 .onSuccess {
-                    _eventInfo.value= it
+                    _eventInfo.value = it
                 }
                 .onFailure {
-                    _errorMessage.value= EventApi.ERROR_MESSAGE
+                    _errorMessage.value = EventApi.ERROR_MESSAGE
                 }
 
         }
