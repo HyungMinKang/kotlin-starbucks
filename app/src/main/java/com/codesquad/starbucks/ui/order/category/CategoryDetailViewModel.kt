@@ -1,8 +1,6 @@
 package com.codesquad.starbucks.ui.order.category
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codesquad.starbucks.common.Constants

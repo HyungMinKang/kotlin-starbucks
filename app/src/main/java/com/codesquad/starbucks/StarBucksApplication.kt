@@ -10,7 +10,6 @@ class StarBucksApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        // start Koin context
         startKoin {
             androidContext(this@StarBucksApplication)
             modules(appModule, NetWorkModule)

@@ -27,7 +27,7 @@ fun getTimeDiff(dateTimeInfo: String): Boolean {
     return secondsInOneDayDuration(seconds)
 }
 
-fun getNowDateTime() :String{
+fun getNowDateTime(): String {
     val nowDateTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val dataFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         LocalDateTime.now(ZoneId.of("Asia/Seoul")).format(dataFormatter)
@@ -37,16 +37,15 @@ fun getNowDateTime() :String{
     return nowDateTime.toString()
 }
 
-fun getNowHour():String{
+fun getNowHour(): String {
     val nowDateTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         LocalDateTime.now(ZoneId.of("Asia/Seoul")).hour
     } else {
         org.joda.time.LocalDateTime.now(DateTimeZone.forID("Asia/Seoul")).hourOfDay
     }
-    return if(nowDateTime>12){
-        "오후 ${nowDateTime-12}시 기준"
-    }
-    else{
+    return if (nowDateTime > 12) {
+        "오후 ${nowDateTime - 12}시 기준"
+    } else {
         "오전 ${nowDateTime}시 기준"
     }
 

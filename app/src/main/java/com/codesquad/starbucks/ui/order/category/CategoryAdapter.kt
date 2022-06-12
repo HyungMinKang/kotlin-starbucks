@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codesquad.starbucks.databinding.ItemOrderCategoryBinding
 import com.codesquad.starbucks.domain.model.Category
 
-class CategoryAdapter(private val itemClick: (categoryName: String) -> Unit) :  RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val itemClick: (categoryName: String) -> Unit) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
-    private var events= mutableListOf<Category>()
+    private var events = mutableListOf<Category>()
 
-    class ViewHolder(private val binding: ItemOrderCategoryBinding ): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Category, itemClick: (categoryName: String) -> Unit){
-            binding.item= item
+    class ViewHolder(private val binding: ItemOrderCategoryBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Category, itemClick: (categoryName: String) -> Unit) {
+            binding.item = item
             binding.root.setOnClickListener {
                 itemClick.invoke(item.koTitle)
             }
@@ -22,7 +23,7 @@ class CategoryAdapter(private val itemClick: (categoryName: String) -> Unit) :  
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(ItemOrderCategoryBinding.inflate(inflater,parent,false))
+        return ViewHolder(ItemOrderCategoryBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,7 +34,7 @@ class CategoryAdapter(private val itemClick: (categoryName: String) -> Unit) :  
         return events.size
     }
 
-    fun submitEvents(events:List<Category>){
+    fun submitEvents(events: List<Category>) {
         this.events.addAll(events)
         notifyDataSetChanged()
     }

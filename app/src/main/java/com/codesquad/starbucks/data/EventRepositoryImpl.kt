@@ -6,11 +6,11 @@ import com.codesquad.starbucks.domain.EventRepository
 import com.codesquad.starbucks.domain.model.Event
 
 class EventRepositoryImpl(private val eventDataSource: EventDataSource) : EventRepository {
+
     override suspend fun getEvent(): Result<Event> {
         return kotlin.runCatching {
             val response = eventDataSource.getEvent()
             response.toEvent()
         }
     }
-
 }

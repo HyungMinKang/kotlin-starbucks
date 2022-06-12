@@ -23,27 +23,33 @@ class CategoryDetailFragment : Fragment() {
     private lateinit var binding: FragmentCategoryDetailBinding
     private val viewModel: CategoryDetailViewModel by inject()
     private lateinit var navigator: NavController
-    private val categoryName: String by lazy { requireArguments().getString(Constants.CATEGORY_KEY, Constants.EMPTY_DEFAULT) }
-    private val categoryCD: String by lazy { requireArguments().getString(Constants.CATEGORY_CD_KEY, Constants.EMPTY_DEFAULT) }
+    private val categoryName: String by lazy {
+        requireArguments().getString(Constants.CATEGORY_KEY, Constants.EMPTY_DEFAULT)
+    }
+    private val categoryCD: String by lazy {
+        requireArguments().getString(Constants.CATEGORY_CD_KEY, Constants.EMPTY_DEFAULT)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_detail, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_category_detail, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val categoryDetailAdapter= CategoryItemAdapter(){
-            productCD, productPrice ->  openProductDetail(productCD,productPrice)
+        val categoryDetailAdapter = CategoryItemAdapter() { productCD, productPrice ->
+            openProductDetail(productCD, productPrice)
         }
-        navigator= NavHostFragment.findNavController(this)
+        navigator = NavHostFragment.findNavController(this)
         viewModel.getCategoryItems(categoryCD)
-        binding.tvCategoryDetailTitle.text= categoryName
-        binding.rvCategoryItem.adapter= categoryDetailAdapter
+        binding.tvCategoryDetailTitle.text = categoryName
+        binding.rvCategoryItem.adapter = categoryDetailAdapter
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.items.collect{
+            viewModel.items.collect {
                 categoryDetailAdapter.submitEvents(it)
             }
         }
@@ -55,8 +61,8 @@ class CategoryDetailFragment : Fragment() {
 
     }
 
-    private fun openProductDetail(productCD:String, price:String){
-        val bundle= bundleOf( Constants.PRODUCT_CD_KEY to productCD,Constants.PRODUCT_PRICE_KEY to price,)
+    private fun openProductDetail(productCD: String, price: String) {
+        val bundle = bundleOf(Constants.PRODUCT_CD_KEY to productCD, Constants.PRODUCT_PRICE_KEY to price)
         navigator.navigate(R.id.action_categoryDetailFragment_to_productDetailFragment, bundle)
     }
 

@@ -9,19 +9,19 @@ import retrofit2.http.Path
 interface ProductContentApi {
     @FormUrlEncoded
     @POST("menu/productViewAjax.do")
-    suspend fun getProductInfo(@Field("product_cd") product_cd:String): ProductInfoDto
+    suspend fun getProductInfo(@Field("product_cd") product_cd: String): ProductInfoDto
 
     @FormUrlEncoded
     @POST("menu/productFileAjax.do")
-    suspend fun getProductImage(@Field("PRODUCT_CD") product_cd:String): ProductFileDto
+    suspend fun getProductImage(@Field("PRODUCT_CD") product_cd: String): ProductFileDto
 
     @FormUrlEncoded
     @POST("whats_new/getIngList.do")
-    suspend fun getAllEvents(@Field("MENU_CD") menu_cd:String):HomeEventsDto
+    suspend fun getAllEvents(@Field("MENU_CD") menu_cd: String): HomeEventsDto
 
     @POST("whats_new/newsListAjax.do")
-    suspend fun getWhatNewEvents():WhatNewEventDto
+    suspend fun getWhatNewEvents(): WhatNewEventDto
 
     @POST("upload/json/menu/{jsFileName}")
-    suspend fun getCategoryItem(@Path("jsFileName") jsFileName:String ): CategoryItemDto
+    suspend fun getCategoryItem(@Path("jsFileName") jsFileName: String): CategoryItemDto
 }

@@ -7,14 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.codesquad.starbucks.databinding.ActivityMainBinding
-import com.codesquad.starbucks.room.FavoriteDataBase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -24,9 +19,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private fun setupNav() {
-        val navController = supportFragmentManager.findFragmentById(R.id.fragment_container)?.findNavController()
+        val navController =
+            supportFragmentManager.findFragmentById(R.id.fragment_container)?.findNavController()
 
         navController?.let {
             binding.bottomNavigationView.setupWithNavController(it)
@@ -35,13 +30,12 @@ class MainActivity : AppCompatActivity() {
         navController?.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.eventFragment -> hideBottomNav()
-                R.id.whatNewFragment->hideBottomNav()
-                R.id.productDetailFragment->hideBottomNav()
-                R.id.categoryDetailFragment->hideBottomNav()
+                R.id.whatNewFragment -> hideBottomNav()
+                R.id.productDetailFragment -> hideBottomNav()
+                R.id.categoryDetailFragment -> hideBottomNav()
                 else -> showBottomNav()
             }
         }
-
     }
 
     private fun showBottomNav() {

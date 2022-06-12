@@ -1,6 +1,5 @@
 package com.codesquad.starbucks.di
 
-import com.codesquad.starbucks.room.FavoriteDao
 import com.codesquad.starbucks.room.FavoriteDataBase
 import com.codesquad.starbucks.ui.event.EventViewModel
 import com.codesquad.starbucks.ui.favorite.FavoriteViewModel
@@ -19,14 +18,14 @@ import org.koin.dsl.module
 val appModule = module {
 
     val applicationScope = CoroutineScope(SupervisorJob())
-    single<Moshi>{
+    single<Moshi> {
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
     }
 
-    single{
-        FavoriteDataBase.getInstance(androidApplication() ,applicationScope)
+    single {
+        FavoriteDataBase.getInstance(androidApplication(), applicationScope)
     }
 
     single {
@@ -35,13 +34,13 @@ val appModule = module {
 
     viewModel { EventViewModel(get()) }
 
-    viewModel { HomeViewModel(get())}
+    viewModel { HomeViewModel(get()) }
 
-    viewModel { WhatNewViewModel(get())}
+    viewModel { WhatNewViewModel(get()) }
 
     viewModel { CategoryDetailViewModel(get()) }
 
-    viewModel { ProductDetailViewModel(get())}
+    viewModel { ProductDetailViewModel(get()) }
 
-    viewModel{FavoriteViewModel(get())}
+    viewModel { FavoriteViewModel(get()) }
 }

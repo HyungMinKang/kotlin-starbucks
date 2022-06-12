@@ -7,17 +7,16 @@ import androidx.room.RoomDatabase
 import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [FavoriteEntity::class], version = 1)
-abstract class FavoriteDataBase: RoomDatabase() {
-    abstract fun favoriteDao():FavoriteDao
+abstract class FavoriteDataBase : RoomDatabase() {
+    abstract fun favoriteDao(): FavoriteDao
 
-    companion object{
-        private var instance:FavoriteDataBase?=null
+    companion object {
+        private var instance: FavoriteDataBase? = null
 
-        @Synchronized
-        fun getInstance(context: Context, coroutineScope: CoroutineScope):FavoriteDataBase?{
-            if(instance==null){
-                synchronized(FavoriteDataBase::class){
-                    instance= Room.databaseBuilder(
+        fun getInstance(context: Context, coroutineScope: CoroutineScope): FavoriteDataBase? {
+            if (instance == null) {
+                synchronized(FavoriteDataBase::class) {
+                    instance = Room.databaseBuilder(
                         context.applicationContext,
                         FavoriteDataBase::class.java,
                         "favorite_database"
@@ -25,8 +24,6 @@ abstract class FavoriteDataBase: RoomDatabase() {
                 }
             }
             return instance
-
         }
-
     }
 }

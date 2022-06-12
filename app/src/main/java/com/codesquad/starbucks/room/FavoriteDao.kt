@@ -18,7 +18,6 @@ interface FavoriteDao {
     @Query("SELECT * FROM favorites")
     fun getAll(): Flow<List<FavoriteEntity>>
 
-
     @Query("SELECT*FROM favorites WHERE koTitle= :itemKoTitle ")
     fun search(itemKoTitle: String): Flow<FavoriteEntity?>
 }

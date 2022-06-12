@@ -4,12 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codesquad.starbucks.common.Constants
-import com.codesquad.starbucks.data.remote.event.EventApi
 import com.codesquad.starbucks.domain.HomeRepository
 import com.codesquad.starbucks.domain.model.HomeContent
 import com.codesquad.starbucks.domain.model.HomeEvent
 import com.codesquad.starbucks.domain.model.NowRecommendItem
-import com.codesquad.starbucks.domain.model.PersoanlRecommendItem
+import com.codesquad.starbucks.domain.model.PersonalRecommendItem
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +22,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         MutableStateFlow<HomeContent>(HomeContent("", emptyList(), "", "", emptyList()))
     val eventInfo: StateFlow<HomeContent> = _totalInfo
 
-    private val _products = MutableStateFlow<MutableList<PersoanlRecommendItem>>(mutableListOf())
-    val products: StateFlow<MutableList<PersoanlRecommendItem>> = _products
+    private val _products = MutableStateFlow<MutableList<PersonalRecommendItem>>(mutableListOf())
+    val products: StateFlow<MutableList<PersonalRecommendItem>> = _products
 
     private val _events = MutableStateFlow<List<HomeEvent>>(emptyList())
     val events: StateFlow<List<HomeEvent>> = _events
@@ -51,7 +50,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     fun getProduct(product_list: List<String>) {
         viewModelScope.launch(coroutineExceptionHandler) {
-            val tempProducts = mutableSetOf<PersoanlRecommendItem>()
+            val tempProducts = mutableSetOf<PersonalRecommendItem>()
             var tempProductTitle = ""
             var tempProductImage = ""
             val loadProduct = launch {
@@ -59,7 +58,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     async {
                         homeRepository.getProductTitle(product)
                             .catch { error -> _errorMessage.value = error.message.toString() }
-                            .collect { tempProductTitle = it?:"" }
+                            .collect { tempProductTitle = it ?: "" }
                     }.await()
 
                     async {
@@ -68,7 +67,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                             .collect { tempProductImage = it }
                     }.await()
                     if (tempProductTitle.isNotEmpty() && tempProductImage.isNotEmpty()) {
-                        tempProducts.add(PersoanlRecommendItem(tempProductTitle, tempProductImage))
+                        tempProducts.add(PersonalRecommendItem(tempProductTitle, tempProductImage))
                     }
                 }
                 _products.value = tempProducts.toMutableList()
@@ -86,7 +85,7 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     async {
                         homeRepository.getNowProductTitle(product)
                             .catch { error -> _errorMessage.value = error.message.toString() }
-                            .collect { tempProductTitle = it?:""}
+                            .collect { tempProductTitle = it ?: "" }
                     }.await()
 
                     async {
@@ -94,7 +93,9 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                             .catch { error -> _errorMessage.value = error.message.toString() }
                             .collect { tempProductImage = it }
                     }.await()
-                    if (tempProductTitle.isNotEmpty() && tempProductImage.isNotEmpty()) { tempProducts.add(NowRecommendItem(tempProductTitle, tempProductImage)) }
+                    if (tempProductTitle.isNotEmpty() && tempProductImage.isNotEmpty()) {
+                        tempProducts.add(NowRecommendItem(tempProductTitle, tempProductImage))
+                    }
                 }
                 _nowProducts.value = tempProducts.toMutableList()
             }.join()

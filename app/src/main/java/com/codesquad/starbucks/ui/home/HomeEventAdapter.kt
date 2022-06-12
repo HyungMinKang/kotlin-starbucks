@@ -4,17 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.codesquad.starbucks.databinding.ItemHomeEventBinding
-import com.codesquad.starbucks.databinding.ItemPersonalRecommendBinding
 import com.codesquad.starbucks.domain.model.HomeEvent
-import com.codesquad.starbucks.domain.model.PersoanlRecommendItem
 
-class HomeEventAdapter: RecyclerView.Adapter<HomeEventAdapter.ViewHolder>() {
+class HomeEventAdapter : RecyclerView.Adapter<HomeEventAdapter.ViewHolder>() {
 
-    private var events= mutableListOf<HomeEvent>()
+    private var events = mutableListOf<HomeEvent>()
 
-    class ViewHolder(private val binding: ItemHomeEventBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(event: HomeEvent){
-            binding.event= event
+    class ViewHolder(private val binding: ItemHomeEventBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(event: HomeEvent) {
+            binding.event = event
             println(event.imageUri)
             binding.executePendingBindings()
         }
@@ -22,7 +21,7 @@ class HomeEventAdapter: RecyclerView.Adapter<HomeEventAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(ItemHomeEventBinding.inflate(inflater,parent,false))
+        return ViewHolder(ItemHomeEventBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,7 +32,7 @@ class HomeEventAdapter: RecyclerView.Adapter<HomeEventAdapter.ViewHolder>() {
         return events.size
     }
 
-    fun submitProducts(events:List<HomeEvent>){
+    fun submitProducts(events: List<HomeEvent>) {
         this.events.addAll(events)
         notifyDataSetChanged()
     }

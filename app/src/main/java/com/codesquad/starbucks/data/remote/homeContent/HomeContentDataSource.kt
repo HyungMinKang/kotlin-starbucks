@@ -3,6 +3,7 @@ package com.codesquad.starbucks.data.remote.homeContent
 import com.codesquad.starbucks.data.dto.*
 
 interface HomeContentDataSource {
+
     suspend fun getTotal():HomeContentDto
 
     suspend fun getProductInfo(product_cd:String):ProductInfoDto

@@ -7,11 +7,14 @@ import com.codesquad.starbucks.common.Constants
 import com.codesquad.starbucks.domain.HomeRepository
 import com.codesquad.starbucks.domain.model.ProductDetail
 import com.codesquad.starbucks.room.FavoriteEntity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class ProductDetailViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 

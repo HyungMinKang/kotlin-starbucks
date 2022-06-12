@@ -16,8 +16,8 @@ fun getMainEventImage(view: ImageView, imageUri: String?) {
 }
 
 @BindingAdapter("HomeEventImage")
-fun getHomeEventImage(view:ImageView, imageUri: String?){
-    view.load(imageUri){
+fun getHomeEventImage(view: ImageView, imageUri: String?) {
+    view.load(imageUri) {
     }
 }
 

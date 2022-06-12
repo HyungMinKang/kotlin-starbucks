@@ -11,21 +11,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel(private val homeRepository: HomeRepository):ViewModel() {
+class FavoriteViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _favorites = MutableStateFlow<List<FavoriteEntity>>(emptyList())
     val favorites: StateFlow<List<FavoriteEntity>> = _favorites
 
-     fun getFavorites(){
+    fun getFavorites() {
         viewModelScope.launch {
             homeRepository.getAllFavoriteItem().collect {
-                _favorites.value=it
+                _favorites.value = it
             }
         }
     }
 
     fun deleteFavorite(favoriteEntity: FavoriteEntity) {
-        CoroutineScope(Dispatchers.IO).launch  {
+        CoroutineScope(Dispatchers.IO).launch {
             homeRepository.deleteFavoriteItem(favoriteEntity)
         }
     }

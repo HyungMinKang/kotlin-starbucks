@@ -16,7 +16,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import org.koin.android.ext.android.inject
 import kotlin.concurrent.timer
 

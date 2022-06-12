@@ -22,7 +22,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val NetWorkModule = module {
 
-    single{ OkHttpClient.Builder().build() }
+    single { OkHttpClient.Builder().build() }
 
     single {
         HttpLoggingInterceptor().apply {
@@ -63,10 +63,10 @@ val NetWorkModule = module {
     single<HomeContentApi> {
         get<Retrofit>(named("HomeContentRetrofit")).create(HomeContentApi::class.java)
     }
-    single<ProductContentApi>{
+    single<ProductContentApi> {
         get<Retrofit>(named("ProductRetrofit")).create(ProductContentApi::class.java)
     }
 
-    single<HomeContentDataSource>{ HomeContentRemoteDataSource(get(), get()) }
+    single<HomeContentDataSource> { HomeContentRemoteDataSource(get(), get()) }
     single<HomeRepository> { HomeRepositoryImpl(get(), get()) }
 }

@@ -9,11 +9,9 @@ import com.codesquad.starbucks.domain.model.*
 import com.codesquad.starbucks.room.FavoriteDao
 import com.codesquad.starbucks.room.FavoriteEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
-class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSource, private val favoriteDao: FavoriteDao) :
-    HomeRepository {
+class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSource, private val favoriteDao: FavoriteDao) : HomeRepository {
 
     override suspend fun getTotalInfo(): Flow<HomeContent> {
         val response = homeContentDataSource.getTotal()
@@ -52,7 +50,8 @@ class HomeRepositoryImpl(private val homeContentDataSource: HomeContentDataSourc
     override suspend fun getWhatNewEvents(): Flow<List<WhatNewEvent>> {
         val response = homeContentDataSource.getWhatNewEvents()
         val whatNewEvent = response.list.map {
-            val url = "${Constants.IMAGE_UPLOAD_PATH}${Constants.IMAGE_NEWS_PATH}${it.appThnlImgName}"
+            val url =
+                "${Constants.IMAGE_UPLOAD_PATH}${Constants.IMAGE_NEWS_PATH}${it.appThnlImgName}"
             WhatNewEvent(it.title, it.newsDt, url)
         }
         return flow { emit(whatNewEvent) }

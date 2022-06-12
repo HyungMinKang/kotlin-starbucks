@@ -261,6 +261,7 @@
                             android:text="@{product.allergy}" />
 
                         <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_product_detail_order"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"

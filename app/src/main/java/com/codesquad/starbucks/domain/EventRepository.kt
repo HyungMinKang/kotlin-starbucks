@@ -4,5 +4,5 @@ import com.codesquad.starbucks.domain.model.Event
 
 interface EventRepository {
 
-    suspend fun getEvent():Result<Event>
+    suspend fun getEvent(): Result<Event>
 }
